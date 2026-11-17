@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Game Bank</title>
+
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background: #f4f6f9;
+    color: #1f2937;
+}
+
+.page {
+    display: none;
+}
+
+.page.active {
+    display: block;
+}
+
+header {
+    background: white;
+    padding: 22px 8%;
+    border-bottom: 1px solid #e5e5e5;
+    font-size: 23px;
+    font-weight: bold;
+}
+
+/* LOGIN PAGE */
+
+#login {
+    min-height: 100vh;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+#login.active {
+    display: flex;
+}
+
+.login-container {
+    background: white;
+    width: 100%;
+    max-width: 420px;
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.brand-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.brand-header h1 {
+    font-size: 24px;
+    color: #0f172a;
+    margin-bottom: 8px;
+}
+
+.brand-header p {
+    font-size: 14px;
+    color: #64748b;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #334155;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    font-size: 15px;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: #2563eb;
+}
+
+.btn-submit {
+    width: 100%;
+    padding: 12px;
+    background: #2563eb;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-submit:hover {
+    background: #1d4ed8;
+}
+
+.links {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 13px;
+}
+
+.links a {
+    color: #2563eb;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.links a:hover {
+    text-decoration: underline;
+}
+
+#helpMessage {
+    margin-top: 10px;
+    font-size: 12px;
+    color: #64748b;
+    display: none;
+}
+
+#loginFeedback {
+    margin-top: 15px;
+    color: #c62828;
+    font-size: 14px;
+    text-align: center;
+}
+
+/* ACCOUNTS */
+
+main {
+    max-width: 850px;
+    margin: 40px auto;
+    padding: 20px;
+}
+
+h1 {
+    font-size: 27px;
+    margin-bottom: 30px;
+}
+
+.account {
+    background: white;
+    padding: 22px;
+    margin-bottom: 15px;
+    border-radius: 6px;
+    border: 1px solid #e8e8e8;
+}
+
+.account h3 {
+    margin-bottom: 15px;
+}
+
+.balance {
+    display: flex;
+    justify-content: space-between;
+    color: #666;
+}
+
+.balance strong {
+    color: #222;
+}
+
+/* TIMER */
+
+.timer-box {
+    background: #fff3f3;
+    border: 1px solid #e8baba;
+    padding: 20px;
+    text-align: center;
+    margin-top: 25px;
+    border-radius: 6px;
+}
+
+.timer {
+    font-size: 35px;
+    font-weight: bold;
+    color: #c62828;
+    margin: 10px;
+}
+
+/* VERIFICATION */
+
+.verification {
+    background: white;
+    padding: 25px;
+    margin-top: 20px;
+    border-radius: 6px;
+    border: 1px solid #e8e8e8;
+}
+
+.verification input {
+    width: 100%;
+    padding: 13px;
+    margin: 15px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 17px;
+}
+
+button {
+    background: #155da0;
+    color: white;
+    border: none;
+    padding: 13px 25px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+button:hover {
+    background: #0f477c;
+}
+
+#feedback {
+    margin-top: 15px;
+    font-weight: bold;
+}
+
+/* ENDING PAGES */
+
+.message {
+    background: white;
+    padding: 25px;
+    margin-top: 30px;
+    border-radius: 6px;
+    border: 1px solid #e8e8e8;
+    line-height: 1.6;
+}
+
+.status {
+    font-weight: bold;
+    color: #25834b;
+}
+
+.warning {
+    text-align: center;
+    margin-top: 40px;
+    color: #a52a2a;
+    font-size: 19px;
+    font-weight: bold;
+    line-height: 1.6;
+}
+
+.game-over {
+    text-align: center;
+    margin-top: 35px;
+    font-size: 38px;
+    font-weight: bold;
+    color: #c62828;
+    letter-spacing: 3px;
+}
+
+.victory {
+    text-align: center;
+    margin-top: 35px;
+    font-size: 42px;
+    font-weight: bold;
+    color: #25834b;
+    letter-spacing: 3px;
+}
+
+footer {
+    margin-top: 70px;
+    padding: 25px;
+    background: white;
+    border-top: 1px solid #e5e5e5;
+    text-align: center;
+    color: #888;
+    font-size: 13px;
+}
+
+@media(max-width: 500px) {
+    .login-container {
+        padding: 25px;
+    }
+
+    .game-over, .victory {
+        font-size: 28px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- PAGE 1 : FICTIONAL LOGIN -->
+
+<section id="login" class="page active">
+
+<div class="login-container">
+
+    <div class="brand-header">
+        <h1>Game Access</h1>
+        <p>Enter your details to continue</p>
+        <p style="margin-top:8px;font-size:11px;">
+            Fictional game interface
+        </p>
+    </div>
+
+    <form id="loginForm">
+
+        <div class="form-group">
+            <label for="firstName">First Name</label>
+            <input
+                type="text"
+                id="firstName"
+                placeholder="Enter your first name"
+                required
+            >
+        </div>
+
+        <div class="form-group">
+            <label for="lastName">Last Name</label>
+            <input
+                type="text"
+                id="lastName"
+                placeholder="Enter your last name"
+                required
+            >
+        </div>
+
+        <div class="form-group">
+            <label for="birthDate">Date of Birth</label>
+            <input
+                type="date"
+                id="birthDate"
+                required
+            >
+        </div>
+
+        <button type="submit" class="btn-submit">
+            Continue
+        </button>
+
+    </form>
+
+    <div id="loginFeedback"></div>
+
+    <div class="links">
+        <a id="helpLink">Need help?</a>
+        <p id="helpMessage">Customer support is currently offline. Check the physical clues around you.</p>
+    </div>
+
+</div>
+
+</section>
+
+
+<!-- PAGE 2 : ACCOUNTS -->
+
+<section id="accounts" class="page">
+
+<header>Game Bank</header>
+
+<main>
+
+    <h1>My Accounts</h1>
+
+    <div class="account">
+        <h3>Current Account</h3>
+        <div class="balance">
+            <span>Balance:</span>
+            <strong>2,450 €</strong>
+        </div>
+    </div>
+
+    <div class="account">
+        <h3>Savings Account (Livret A)</h3>
+        <div class="balance">
+            <span>Balance:</span>
+            <strong>15,200 €</strong>
+        </div>
+    </div>
+
+    <div class="account">
+        <h3>Home Savings Plan (PEL)</h3>
+        <div class="balance">
+            <span>Balance:</span>
+            <strong>34,800 €</strong>
+        </div>
+    </div>
+
+    <div class="timer-box">
+        <h3>TIME REMAINING</h3>
+        <div class="timer" id="timer">05:00</div>
+        <p>You have 5 minutes to stop the transfer.</p>
+    </div>
+
+    <form class="verification" id="transferForm">
+
+        <h3>Cancel Account Transfers</h3>
+
+        <p>
+            Enter your game transfer code before the timer reaches zero.
+        </p>
+
+        <input
+            type="password"
+            id="transferCode"
+            placeholder="Enter transfer code"
+            required
+        >
+
+        <button type="submit">SUBMIT</button>
+
+        <div id="feedback"></div>
+
+    </form>
+
+</main>
+
+<footer>Fictional game interface · Game Bank</footer>
+
+</section>
+
+
+<!-- PAGE 3 : TRANSFER / LOSS -->
+
+<section id="transfer" class="page">
+
+<header>Game Bank</header>
+
+<main>
+
+    <h1>My Accounts</h1>
+
+    <div class="account">
+        <h3>Current Account</h3>
+        <div class="balance">
+            <span>Balance:</span>
+            <strong>0 €</strong>
+        </div>
+    </div>
+
+    <div class="account">
+        <h3>Savings Account (Livret A)</h3>
+        <div class="balance">
+            <span>Balance:</span>
+            <strong>0 €</strong>
+        </div>
+    </div>
+
+    <div class="account">
+        <h3>Home Savings Plan (PEL)</h3>
+        <div class="balance">
+            <span>Balance:</span>
+            <strong>0 €</strong>
+        </div>
+    </div>
+
+    <div class="game-over">
+        GAME OVER - YOU LOST!
+    </div>
+
+</main>
+
+<footer>Fictional game interface · Game Bank</footer>
+
+</section>
+
+
+<!-- PAGE 4 : CANCELLATION / VICTORY -->
+
+<section id="cancellation" class="page">
+
+<header>Game Bank</header>
+
+<main>
+
+    <h1>My Accounts</h1>
+
+    <div class="account">
+        <h3>Current Account</h3>
+        <div class="status">Transfer cancelled (2,450 € safe)</div>
+    </div>
+
+    <div class="account">
+        <h3>Savings Account (Livret A)</h3>
+        <div class="status">Transfer cancelled (15,200 € safe)</div>
+    </div>
+
+    <div class="account">
+        <h3>Home Savings Plan (PEL)</h3>
+        <div class="status">Transfer cancelled (34,800 € safe)</div>
+    </div>
+
+    <div class="victory">
+        YOU WON!
+    </div>
+
+</main>
+
+<footer>Fictional game interface · Game Bank</footer>
+
+</section>
+
+
+<script>
+
+// GAME SETTINGS (Encoded in Base64 to prevent immediate plain-text reading in source)
+const GAME_CODE = atob("MjE0NQ=="); // 2145
+const CORRECT_FIRST_NAME = atob("YmVub2l0"); // benoit
+const CORRECT_LAST_NAME = atob("bWFydGluZXQ="); // martinet
+const CORRECT_BIRTH_DATE = atob("MTk4Mi0wMy0yMg=="); // 1982-03-22
+
+const GAME_DURATION = 5 * 60;
+
+let timeRemaining = GAME_DURATION;
+let gameFinished = false;
+let countdown = null;
+let deadline = null;
+
+
+// HELPER: NORMALIZE TEXT (removes accents, trims spaces, lowercases)
+function normalizeText(str) {
+    return str
+        .trim()
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "");
+}
+
+
+// NAVIGATION
+function showPage(pageId) {
+    document.querySelectorAll(".page").forEach(page => {
+        page.classList.remove("active");
+    });
+
+    document.getElementById(pageId).classList.add("active");
+    window.scrollTo(0, 0);
+}
+
+
+// HELP LINK
+document.getElementById("helpLink").addEventListener("click", function(event) {
+    event.preventDefault();
+    const helpMsg = document.getElementById("helpMessage");
+    helpMsg.style.display = helpMsg.style.display === "block" ? "none" : "block";
+});
+
+
+// LOGIN VALIDATION
+document.getElementById("loginForm").addEventListener("submit", function(event) {
+    event.preventDefault();
+
+    const firstName = normalizeText(document.getElementById("firstName").value);
+    const lastName = normalizeText(document.getElementById("lastName").value);
+    const birthDate = document.getElementById("birthDate").value;
+    const feedback = document.getElementById("loginFeedback");
+
+    if (
+        firstName === CORRECT_FIRST_NAME &&
+        lastName === CORRECT_LAST_NAME &&
+        birthDate === CORRECT_BIRTH_DATE
+    ) {
+        feedback.textContent = "";
+        showPage("accounts");
+        startCountdown();
+    } else {
+        feedback.textContent = "Incorrect information. Please try again.";
+    }
+});
+
+
+// TIMER DISPLAY
+function updateTimer() {
+    const minutes = Math.floor(timeRemaining / 60);
+    const seconds = timeRemaining % 60;
+
+    document.getElementById("timer").textContent =
+        String(minutes).padStart(2, "0") + ":" +
+        String(seconds).padStart(2, "0");
+}
+
+
+// VERIFY TRANSFER CODE (Works on both button click and Enter key)
+document.getElementById("transferForm").addEventListener("submit", function(event) {
+    event.preventDefault();
+
+    if (gameFinished) return;
+
+    // Recalculate the timer before accepting an answer.
+    updateCountdown();
+    if (gameFinished) return;
+
+    const enteredCode = document.getElementById("transferCode").value.trim();
+    const feedback = document.getElementById("feedback");
+
+    if (enteredCode === GAME_CODE) {
+        gameFinished = true;
+        clearInterval(countdown);
+        countdown = null;
+        showPage("cancellation");
+    } else {
+        feedback.style.color = "#c62828";
+        feedback.textContent = "Incorrect code. Try again!";
+    }
+});
+
+
+// FINISH THE GAME WHEN THE TIMER EXPIRES
+function finishGame() {
+    if (gameFinished) return;
+
+    gameFinished = true;
+    clearInterval(countdown);
+    countdown = null;
+
+    timeRemaining = 0;
+    updateTimer();
+    showPage("transfer");
+}
+
+
+// RECALCULATE THE REMAINING TIME FROM THE REAL DEADLINE
+function updateCountdown() {
+    if (gameFinished || deadline === null) return;
+
+    const remainingMilliseconds = deadline - Date.now();
+    timeRemaining = Math.max(0, Math.ceil(remainingMilliseconds / 1000));
+    updateTimer();
+
+    if (remainingMilliseconds <= 0) {
+        finishGame();
+    }
+}
+
+
+// START THE COUNTDOWN
+function startCountdown() {
+    // Prevent accidentally starting multiple timers.
+    if (countdown !== null || gameFinished) return;
+
+    deadline = Date.now() + GAME_DURATION * 1000;
+    updateCountdown();
+
+    // The interval refreshes the display; the deadline keeps timing accurate
+    // even when the browser temporarily slows down background tabs.
+    countdown = setInterval(updateCountdown, 200);
+}
+
+</script>
+
+</body>
+</html>
